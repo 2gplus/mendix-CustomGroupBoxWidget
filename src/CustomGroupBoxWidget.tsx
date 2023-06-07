@@ -11,6 +11,11 @@ export function CustomGroupBoxWidget(props: CustomGroupBoxWidgetContainerProps):
             headerContent={props.headerContent}
             bodyContent={props.bodyContent}
             collapsible={props.collapsible}
+            executeOnce={props.executeOpenActionOnce}
+            openDelay={props.hoverTimeout}
+            openAction={props.onOpenAction}
+            headerClick={props.clickAction}
+            headerCtrlClick={props.ctrlClickAction}
         />
     );
 }

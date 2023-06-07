@@ -5,6 +5,8 @@ import { CustomGroupBoxWidgetPreviewProps } from "../typings/CustomGroupBoxWidge
 
 function transformProps(props: CustomGroupBoxWidgetPreviewProps): CustomGroupBoxProps {
     return {
+        executeOnce: false,
+        openDelay: 0,
         className: props.className,
         headerContent: (
             <props.headerContent.renderer caption="Place header content here">

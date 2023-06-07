@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<widget id="itvisors.customgroupboxwidget.CustomGroupBoxWidget" pluginWidget="true" needsEntityContext="true" offlineCapable="true"
+<widget id="itvisors.customgroupboxwidget.CustomGroupBoxWidget" pluginWidget="true" needsEntityContext="true"
+        offlineCapable="true"
         supportedPlatform="Web"
         xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
@@ -23,7 +24,39 @@
                     <enumerationValue key="no">No</enumerationValue>
                     <enumerationValue key="yesStartExpanded">Yes (start expanded)</enumerationValue>
                     <enumerationValue key="yesStartCollapsed">Yes (start collapsed)</enumerationValue>
+                    <enumerationValue key="yesStartCollapsedOpenOnHover">Yes (start collapsed, open on hover)
+                    </enumerationValue>
                 </enumerationValues>
+            </property>
+            <property key="showBody" type="enumeration" defaultValue="Default">
+                <caption>Body placement</caption>
+                <description></description>
+                <enumerationValues>
+                    <enumerationValue key="Default">Default</enumerationValue>
+                    <enumerationValue key="Hover">Hover</enumerationValue>
+                </enumerationValues>
+            </property>
+            <property key="onOpenAction" type="action" required="false">
+                <caption>On open action</caption>
+                <description>Execute action on open</description>
+            </property>
+            <property key="executeOpenActionOnce" type="boolean" defaultValue="true">
+                <caption>Execute once</caption>
+                <description>Execute only first time the box is opened</description>
+            </property>
+            <property key="hoverTimeout" type="integer" defaultValue="0">
+                <caption>On hover</caption>
+                <description>Show body after x milliseconds</description>
+            </property>
+        </propertyGroup>
+        <propertyGroup caption="Header">
+            <property key="clickAction" type="action" required="false">
+                <caption>(double)Click</caption>
+                <description>Action on double click</description>
+            </property>
+            <property key="ctrlClickAction" type="action" required="false">
+                <caption>(double)ctrl click</caption>
+                <description>Action on double click while holding ctrl</description>
             </property>
         </propertyGroup>
     </properties>

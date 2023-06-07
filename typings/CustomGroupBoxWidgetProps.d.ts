@@ -4,8 +4,11 @@
  * @author Mendix Widgets Framework Team
  */
 import { ComponentType, CSSProperties, ReactNode } from "react";
+import { ActionValue } from "mendix";
 
-export type CollapsibleEnum = "no" | "yesStartExpanded" | "yesStartCollapsed";
+export type CollapsibleEnum = "no" | "yesStartExpanded" | "yesStartCollapsed" | "yesStartCollapsedOpenOnHover";
+
+export type ShowBodyEnum = "Default" | "Hover";
 
 export interface CustomGroupBoxWidgetContainerProps {
     name: string;
@@ -15,6 +18,12 @@ export interface CustomGroupBoxWidgetContainerProps {
     headerContent: ReactNode;
     bodyContent: ReactNode;
     collapsible: CollapsibleEnum;
+    showBody: ShowBodyEnum;
+    onOpenAction?: ActionValue;
+    executeOpenActionOnce: boolean;
+    hoverTimeout: number;
+    clickAction?: ActionValue;
+    ctrlClickAction?: ActionValue;
 }
 
 export interface CustomGroupBoxWidgetPreviewProps {
@@ -29,4 +38,10 @@ export interface CustomGroupBoxWidgetPreviewProps {
     headerContent: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     bodyContent: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     collapsible: CollapsibleEnum;
+    showBody: ShowBodyEnum;
+    onOpenAction: {} | null;
+    executeOpenActionOnce: boolean;
+    hoverTimeout: number | null;
+    clickAction: {} | null;
+    ctrlClickAction: {} | null;
 }
