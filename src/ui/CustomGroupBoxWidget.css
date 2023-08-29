@@ -2,7 +2,7 @@
 Place your custom CSS here
 */
 .customGroupBoxPreview {
-    
+
 }
 
 .customGroupBoxHeaderContainer {
@@ -12,4 +12,5 @@ Place your custom CSS here
 
 .customGroupBoxHeaderContent {
     flex-grow: 1;
+    margin-right:16px;
 }

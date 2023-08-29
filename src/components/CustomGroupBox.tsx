@@ -39,7 +39,7 @@ export function CustomGroupBox(props: CustomGroupBoxProps): ReactElement {
 
         const iconName = boxStatus.boxStatusType === "expanded" ? "minus" : "plus";
         const iconClassName = "glyphicon mx-groupbox-collapse-icon glyphicon-" + iconName;
-        return <i className={iconClassName} />;
+        return <i style={{top:"1px",marginTop: "0.1em"}} className={iconClassName} />;
     }, [boxStatus, props.collapsible]);
 
     const onDblClickHandler = (e: React.MouseEvent<HTMLDivElement>) =>
@@ -100,39 +100,45 @@ export function CustomGroupBox(props: CustomGroupBoxProps): ReactElement {
         setBoxStatus({pageLocation, boxStatusType: "expanded"  });
     }
 
-    const headerMouseEnterHandler = (e: React.MouseEvent<HTMLDivElement>) =>
+    let headerMouseEnterHandler, headerMouseLeaveHandler,bodyMouseEnterHandler, bodyMouseLeaveHandler;
+
+    if(props.collapsible === "yesStartCollapsedOpenOnHover")
     {
-        clearTimeout(timeoutHide)
-        const [x,y] = [e.pageX, e.pageY];
-        if (props.openDelay > 0)
+        headerMouseEnterHandler =  (e: React.MouseEvent<HTMLDivElement>) =>
         {
-            timeoutAction = setTimeout(() => onOpenAction({x,y}), props.openDelay);
+            clearTimeout(timeoutHide)
+            const [x,y] = [e.pageX, e.pageY];
+            if (props.openDelay > 0)
+            {
+                timeoutAction = setTimeout(() => onOpenAction({x,y}), props.openDelay);
+            }
+            else
+            {
+                onOpenAction({x,y});
+            }
         }
-        else
+        headerMouseLeaveHandler = () =>
         {
-            onOpenAction({x,y});
+            if (props.openDelay > 0)
+            {
+                clearTimeout(timeoutAction);
+            }
+            timeoutHide = setTimeout(() =>setBoxStatus({pageLocation:{x:0,y:0}, boxStatusType: "collapsed"  }), 25);
+        }
+        bodyMouseEnterHandler = () =>
+        {
+            clearTimeout(timeoutHide);
+        }
+        bodyMouseLeaveHandler = () =>
+        {
+            if (props.openDelay > 0)
+            {
+                clearTimeout(timeoutAction);
+            }
+            timeoutHide = setTimeout(() =>setBoxStatus({pageLocation:{x:0,y:0}, boxStatusType: "collapsed"  }), 25);
         }
     }
-    const headerMouseLeaveHandler = () =>
-    {
-        if (props.openDelay > 0)
-        {
-            clearTimeout(timeoutAction);
-        }
-        timeoutHide = setTimeout(() =>setBoxStatus({pageLocation:{x:0,y:0}, boxStatusType: "collapsed"  }), 25);
-    }
-    const bodyMouseEnterHandler = () =>
-    {
-        clearTimeout(timeoutHide);
-    }
-    const bodyMouseLeaveHandler = () =>
-    {
-        if (props.openDelay > 0)
-        {
-            clearTimeout(timeoutAction);
-        }
-        timeoutHide = setTimeout(() =>setBoxStatus({pageLocation:{x:0,y:0}, boxStatusType: "collapsed"  }), 25);
-    }
+
     return (
         <div className={containerClassName}>
             <div className="mx-groupbox-header" onMouseOver={headerMouseEnterHandler}
@@ -142,9 +148,9 @@ export function CustomGroupBox(props: CustomGroupBoxProps): ReactElement {
                     {getIcon}
                 </div>
             </div>
-            <div className="mx-groupbox-body" style={props.collapsible === "yesStartCollapsedOpenOnHover" ? { top: boxStatus.pageLocation.y, left: boxStatus.pageLocation.x, display:boxStatus.boxStatusType === "expanded" ? "block" : "none" } : {}}
+            <div className="mx-groupbox-body" style={props.collapsible === "yesStartCollapsedOpenOnHover" ? { top: boxStatus.pageLocation.y, left: boxStatus.pageLocation.x, display:boxStatus.boxStatusType === "expanded" ? "block" : "none" } : {display:boxStatus.boxStatusType === "expanded" ? "block" : "none" }}
                  onMouseOver={bodyMouseEnterHandler}
-                 onMouseOut={bodyMouseLeaveHandler}>{boxStatus.boxStatusType === "expanded" ? bodyContent : null}</div>
+                 onMouseOut={bodyMouseLeaveHandler}>{boxStatus.boxStatusType !== "notRendered" ? bodyContent : null}</div>
         </div>
     );
 }
