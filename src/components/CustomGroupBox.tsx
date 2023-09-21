@@ -107,7 +107,9 @@ export function CustomGroupBox(props: CustomGroupBoxProps): ReactElement {
         headerMouseEnterHandler =  (e: React.MouseEvent<HTMLDivElement>) =>
         {
             clearTimeout(timeoutHide)
-            const [x,y] = [e.pageX, e.pageY];
+            const target = e.currentTarget;
+            const clientRects = target.getBoundingClientRect();
+            const [x,y] = [clientRects.left + (clientRects.width * .5), clientRects.height + clientRects.top];
             if (props.openDelay > 0)
             {
                 timeoutAction = setTimeout(() => onOpenAction({x,y}), props.openDelay);
